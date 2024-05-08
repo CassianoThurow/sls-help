@@ -4,24 +4,27 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const AddressInput = ({ onAddMarker }) => {
-  const [address, setAddress] = useState('');
+  const [streetAddress, setStreetAddress] = useState('');
   const [description, setDescription] = useState('');
 
   const handleSearchAddress = async () => {
+    // Automatically include the city name in the address
+    const fullAddress = `${streetAddress}, São Lourenço do Sul`;
+
     try {
       const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
         params: {
-          address,
+          address: fullAddress,
           key: process.env.NEXT_PUBLIC_APP_GOOGLE_MAPS_API_KEY
         }
       });
+
       const results = response.data.results;
       if (results.length > 0) {
         const { lat, lng } = results[0].geometry.location;
         const region = results[0].address_components.find(component => component.long_name === 'São Lourenço do Sul');
         if (region) {
-          // Adicionar endereço ao objeto do marcador
-          onAddMarker({ lat, lng, description, address });
+          onAddMarker({ lat, lng, description, address: fullAddress });
         } else {
           alert('O endereço fornecido não está dentro de São Lourenço do Sul.');
         }
@@ -38,16 +41,16 @@ const AddressInput = ({ onAddMarker }) => {
     <div className="flex flex-col gap-2 p-4 bg-gray-100 rounded-lg shadow-md">
       <input
         type="text"
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
+        value={streetAddress}
+        onChange={(e) => setStreetAddress(e.target.value)}
         className='text-black p-2 border rounded-lg'
-        placeholder="Digite o endereço"
+        placeholder="Digite a rua e o número"
       />
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         className='text-black p-2 border rounded-lg'
-        placeholder="Descreva o basico, quantidade de pessoas, animais, etc."
+        placeholder="Descreva o básico, quantidade de pessoas, animais, etc."
       />
       <button
         onClick={handleSearchAddress}

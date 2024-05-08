@@ -19,6 +19,11 @@ const Map = ({ markers, onMarkerRemoved }) => {
 
   const handleCheckboxChange = () => setIsConfirmed(!isConfirmed);
 
+  const handleMarkerRemoval = (id) => {
+    onMarkerRemoved(id);
+    setSelectedMarker(null); // Fechar o pop-up
+  };
+
   return (
     <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_APP_GOOGLE_MAPS_API_KEY}>
       <GoogleMap
@@ -53,7 +58,7 @@ const Map = ({ markers, onMarkerRemoved }) => {
               </div>
               <button
                 onClick={() => {
-                  if (isConfirmed) onMarkerRemoved(selectedMarker.id);
+                  if (isConfirmed) handleMarkerRemoval(selectedMarker.id);
                 }}
                 className={`w-full py-1 px-2 text-white rounded-md ${
                   isConfirmed ? 'bg-red-600 hover:bg-red-700' : 'bg-gray-300 cursor-not-allowed'
