@@ -40,7 +40,7 @@ const Map = ({ markers, onDeleteMarker }) => {
   };
 
   return (
-    <LoadScript googleMapsApiKey={process.env.APP_GOOGLE_MAPS_API_KEY}>
+    <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_APP_GOOGLE_MAPS_API_KEY}>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

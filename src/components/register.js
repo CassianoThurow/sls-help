@@ -24,7 +24,7 @@ const RegisterShelterModal = ({ isOpen, onClose, onRegister }) => {
       const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
         params: {
           address: fullAddress,
-          key: process.env.APP_GOOGLE_MAPS_API_KEY
+          key: process.env.NEXT_PUBLIC_APP_GOOGLE_MAPS_API_KEY
         }
       });
 
