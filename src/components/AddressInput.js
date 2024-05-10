@@ -8,14 +8,13 @@ const AddressInput = ({ onAddMarker }) => {
   const [description, setDescription] = useState('');
 
   const handleSearchAddress = async () => {
-    // Automatically include the city name in the address
     const fullAddress = `${streetAddress}, São Lourenço do Sul`;
 
     try {
       const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
         params: {
           address: fullAddress,
-          key: process.env.NEXT_PUBLIC_APP_GOOGLE_MAPS_API_KEY
+          key: process.env.APP_GOOGLE_MAPS_API_KEY
         }
       });
 
